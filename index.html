@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta del Bar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background-color: #f8f8f8;
+        }
+        .menu-container {
+            width: 21cm;
+            height: 29.7cm;
+            background: white;
+            margin: auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Carta del Bar</h1>
+    <div class="menu-container" id="menu">
+        <p>Cargando menú...</p>
+    </div>
+    <script>
+        async function cargarMenu() {
+            const url = "URL_DE_TU_GOOGLE_APPS_SCRIPT"; 
+            try {
+                let response = await fetch(url);
+                let data = await response.json();
+                const menuContainer = document.getElementById("menu");
+                menuContainer.innerHTML = "";
+                data.forEach(item => {
+                    let div = document.createElement("div");
+                    div.className = "menu-item";
+                    div.innerHTML = `<span>${item.nombre}</span><span>$${item.precio}</span>`;
+                    menuContainer.appendChild(div);
+                });
+            } catch (error) {
+                console.error("Error al cargar el menú", error);
+            }
+        }
+        cargarMenu();
+    </script>
+</body>
+</html>
